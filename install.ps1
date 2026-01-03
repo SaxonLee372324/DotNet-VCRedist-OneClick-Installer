@@ -1,5 +1,5 @@
 # =========================================
-# DotNet + VC++ OneClick Installer
+# DotNet + VCRedist OneClick Installer
 # Chinese Output via [char] Unicode
 # ASCII SAFE / PS 5.1+ COMPATIBLE
 # =========================================
@@ -10,7 +10,7 @@ function CN {
 }
 
 Write-Host "========================================="
-Write-Host ("DotNet + VC++ " + (CN 0x4E00,0x952E,0x5B89,0x88C5,0x5668))
+Write-Host ("DotNet + VCRedist " + (CN 0x4E00,0x952E,0x5B89,0x88C5,0x5668))
 Write-Host "========================================="
 
 $psMajor = $PSVersionTable.PSVersion.Major
@@ -112,10 +112,13 @@ function Install-WithWinget {
 # -----------------------------
 # Packages
 # -----------------------------
-$DotNetRuntimes = @{
-    "6"  = "Microsoft.DotNet.DesktopRuntime.6"
-    "8"  = "Microsoft.DotNet.DesktopRuntime.8"
-    "10" = "Microsoft.DotNet.DesktopRuntime.10"
+$DotNetSDK = @{
+	"5"  = "Microsoft.DotNet.SDK.5"
+    "6"  = "Microsoft.DotNet.SDK.6"
+	"7"  = "Microsoft.DotNet.SDK.7"
+    "8"  = "Microsoft.DotNet.SDK.8"
+	"9"  = "Microsoft.DotNet.SDK.9"
+    "10" = "Microsoft.DotNet.SDK.10"
 }
 
 $VCPackages = @{
@@ -133,8 +136,8 @@ $VCPackages = @{
     "2015+.x64" = "Microsoft.VCRedist.2015+.x64"
 }
 
-foreach ($ver in $DotNetRuntimes.Keys) {
-    Install-WithWinget (".NET $ver " + (CN 0x8FD0,0x884C,0x65F6)) $DotNetRuntimes[$ver]
+foreach ($ver in $DotNetSDK.Keys) {
+    Install-WithWinget (".NET $ver SDK") $DotNetSDK[$ver]
 }
 
 foreach ($ver in $VCPackages.Keys) {
