@@ -4,6 +4,11 @@
 # ASCII SAFE / PS 5.1+ COMPATIBLE
 # =========================================
 
+# ---- encoding fix for EXE / winget ----
+$ProgressPreference = 'SilentlyContinue'
+[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
+[Console]::InputEncoding  = [System.Text.UTF8Encoding]::new($false)
+
 function CN {
     param([int[]]$Codes)
     return -join ($Codes | ForEach-Object { [char]$_ })
@@ -97,8 +102,9 @@ function Install-WithWinget {
             --id $PackageId `
             --source winget `
             --silent `
+            --disable-interactivity `
             --accept-package-agreements `
-            --accept-source-agreements
+            --accept-source-agreements | Out-Null
 
         Write-Host ("{0} {1}" -f $DisplayName, (CN 0x5904,0x7406,0x5B8C,0x6210))
     }
@@ -113,11 +119,11 @@ function Install-WithWinget {
 # Packages
 # -----------------------------
 $DotNetSDK = @{
-	"5"  = "Microsoft.DotNet.SDK.5"
+    "5"  = "Microsoft.DotNet.SDK.5"
     "6"  = "Microsoft.DotNet.SDK.6"
-	"7"  = "Microsoft.DotNet.SDK.7"
+    "7"  = "Microsoft.DotNet.SDK.7"
     "8"  = "Microsoft.DotNet.SDK.8"
-	"9"  = "Microsoft.DotNet.SDK.9"
+    "9"  = "Microsoft.DotNet.SDK.9"
     "10" = "Microsoft.DotNet.SDK.10"
 }
 
